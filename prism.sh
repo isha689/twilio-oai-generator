@@ -33,7 +33,7 @@ function check_status() {
   done
 }
 
-testing_services=("java-test" "csharp-test")
+testing_services=("java-test")
 wait_for "${testing_services[@]}"
 check_status "${testing_services[@]}"
 docker-compose down
