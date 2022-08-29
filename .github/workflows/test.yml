@@ -70,10 +70,10 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           dotnet tool install --global dotnet-sonarscanner
-          dotnet sonarscanner begin /d:sonar.login="${SONAR_TOKEN}"
+          dotnet sonarscanner begin /d:sonar.login="${SONAR_TOKEN}" /k:"isha689_openapi-generator"
           dotnet build Twilio.sln > buildforsonar.log
           dotnet test test/Twilio.Test/Twilio.Test.csproj --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=../lcov
-          dotnet sonarscanner end /d:sonar.login="${SONAR_TOKEN}"
+          dotnet sonarscanner end /d:sonar.login="${SONAR_TOKEN}" /k:"isha689_openapi-generator"
 
   notify-on-failure:
     name: Slack notify on failure
