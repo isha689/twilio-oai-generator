@@ -8,6 +8,6 @@ __pycache__
 **/docs
 **/*.bak
 
-**/coverage.out
+**/coverage*
 **/test-report.out
 **/lcov.net451.opencover.xml
