@@ -13,7 +13,7 @@ ENV PATH="${PATH}:/root/.dotnet/tools"
 
 RUN mkdir /app
 WORKDIR /app
-RUN git clone --depth 1 https://github.com/twilio/twilio-csharp.git
+RUN git clone --depth 1 https://github.com/isha689/twilio-csharp.git
 WORKDIR /app/twilio-csharp
 
 RUN rm -rf test/ \
@@ -27,11 +27,11 @@ RUN dotnet build -c Release
 
 # sonar coverage reports
 # Add /d:sonar.login="${SONAR_TOKEN}" to sync up with sonarcloud.
-RUN dotnet sonarscanner begin /k:"isha689_twilio-csharp" /o:"isha689" /d:sonar.login="$secrets.SONAR_TOKEN" /d:sonar.host.url=https://sonarcloud.io /d:sonar.language="cs" /d:sonar.exclusions="src/Twilio/Rest/**/*.*,test/Twilio.Test/**/*.*" /d:sonar.cs.opencover.reportsPaths="test/lcov.net451.opencover.xml" /d:sonar.coverageReportPaths=".\sonarqubecoverage\SonarQube.xml"
+RUN dotnet sonarscanner begin /k:"isha689_twilio-csharp" /o:"isha689" /d:sonar.login="f3edc4aa6b69b06b574414a7a8612aa5eaf9543e" /d:sonar.host.url=https://sonarcloud.io /d:sonar.language="cs" /d:sonar.exclusions="src/Twilio/Rest/**/*.*,test/Twilio.Test/**/*.*" /d:sonar.cs.opencover.reportsPaths="test/lcov.net451.opencover.xml" /d:sonar.coverageReportPaths=".\sonarqubecoverage\SonarQube.xml"
 # Generates way too much logs / warnings so sending it to a log file instead
 RUN	dotnet build Twilio.sln > buildforsonar.log
 #RUN reportgenerator "-reports:./test/lcov.net451.opencover.xml" "-targetdir:test" "-reporttypes:SonarQube" -- enable this to generate better reports
 CMD ["/bin/bash", "-c", "dotnet test test/Twilio.Test/Twilio.Test.csproj --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=../lcov| tee /local/test-report.out"]
-RUN dotnet sonarscanner end /d:sonar.login="${{secrets.SONAR_TOKEN}}"
+RUN dotnet sonarscanner end /d:sonar.login="f3edc4aa6b69b06b574414a7a8612aa5eaf9543e"
 #    -- enable this when syncing up with sonarcloud
 
